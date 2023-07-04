@@ -43,21 +43,17 @@ class Login_page(base_page.Base_page):
         self.chrome.find_element(*self.PASSWORD_FIELD).send_keys("ConstantlyLearn9*")
         element = self.chrome.find_element(*self.LOGIN_BUTTON)
         self.chrome.execute_script("arguments[0].click();", element)
-        #actual = self.chrome.find_element(*self.MESSAGE_ERROR).text
-        #expected = "The username or password you entered is incorrect, please try again."
-        WebDriverWait(self.chrome, 10).until(EC.presence_of_element_located(self.MESSAGE_ERROR))
-        #self.assertTrue(expected in actual, "Error text message is incorrect.")
-        assert self.chrome.find_element(*self.MESSAGE_ERROR).is_displayed() == True
-
+        actual = self.chrome.find_element(*self.MESSAGE_ERROR).text
+        expected = "The username or password you entered is incorrect, please try again."
+        self.assertTrue(expected in actual, "Error text message is incorrect.")
 
     def verify_login_success(self):
         self.chrome.find_element(*self.EMAIL_FIELD).send_keys("andreeapopa9793@gmail.com")
         self.chrome.find_element(*self.PASSWORD_FIELD).send_keys("ConstantlyLearn9*")
         self.chrome.find_element(*self.LOGIN_BUTTON).click()
-        expected_page_title = "Following - CodePen"
+        expected_page_title = "Your Work - CodePen"
         WebDriverWait(self.chrome, 10).until(EC.title_contains(expected_page_title))
         self.assertIn(expected_page_title, self.chrome.title)
-
 
     def verify_login_logout(self):
         self.chrome.find_element(*self.EMAIL_FIELD).send_keys("andreeapopa9793@gmail.com")
